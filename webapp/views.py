@@ -1,4 +1,7 @@
+from django.http.response import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
+
+from webapp.forms import User as UserForm
 
 
 def index(request):
@@ -10,4 +13,13 @@ def login(request):
 
 
 def signup(request):
-    pass
+    if request.method == 'POST':
+        form = UserForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/')
+        else:
+            return HttpResponse(content=str(form.errors), status=400)
+    else:
+        form = UserForm()
+        return render(request, 'signup.html', {'form': form})
