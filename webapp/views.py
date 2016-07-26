@@ -18,8 +18,6 @@ def signup(request):
         if form.is_valid():
             form.save()
             return HttpResponseRedirect('/')
-        else:
-            return HttpResponse(content=str(form.errors), status=400)
     else:
         form = UserForm()
-        return render(request, 'signup.html', {'form': form})
+    return render(request, 'signup.html', {'form': form})
