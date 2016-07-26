@@ -1,5 +1,6 @@
 from django.http.response import HttpResponse
+from django.shortcuts import render
 
 
 def index(request):
-    return HttpResponse('Lojaralho, sua lojinha do caralho! =)')
+    return render(request, 'index.html')
