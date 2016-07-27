@@ -18,19 +18,21 @@ class TestUserForm(TestCase):
             'cellphone': '34567890'
         }
 
+    def assert_user_matches(self, user, **expected_fields):
+        self.assertEqual(user.email, expected_fields['email'])
+        self.assertEqual(user.username, expected_fields['username'])
+        self.assertEqual(user.first_name, expected_fields['first_name'])
+        self.assertEqual(user.last_name, expected_fields['last_name'])
+        self.assertTrue(check_password(expected_fields['password1'],
+                                       user.password))
+        self.assertEqual(user.address, expected_fields['address'])
+        self.assertEqual(user.cellphone, expected_fields['cellphone'])
+
     def test_all_fields(self):
         form = User(self.user_data)
         self.assertTrue(form.is_valid())
-
         user = form.save()
-        self.assertEqual(user.email, self.user_data['email'])
-        self.assertEqual(user.username, self.user_data['username'])
-        self.assertEqual(user.first_name, self.user_data['first_name'])
-        self.assertEqual(user.last_name, self.user_data['last_name'])
-        self.assertTrue(check_password(self.user_data['password1'],
-                                       user.password))
-        self.assertEqual(user.address, self.user_data['address'])
-        self.assertEqual(user.cellphone, self.user_data['cellphone'])
+        self.assert_user_matches(user, **self.user_data)
 
     def test_only_required_fields(self):
         del self.user_data['address']
@@ -40,14 +42,10 @@ class TestUserForm(TestCase):
         self.assertTrue(form.is_valid())
 
         user = form.save()
-        self.assertEqual(user.email, self.user_data['email'])
-        self.assertEqual(user.username, self.user_data['username'])
-        self.assertEqual(user.first_name, self.user_data['first_name'])
-        self.assertEqual(user.last_name, self.user_data['last_name'])
-        self.assertTrue(check_password(self.user_data['password1'],
-                                       user.password))
-        self.assertEqual(user.address, '')
-        self.assertEqual(user.cellphone, '')
+        self.assert_user_matches(user,
+                                 address='',
+                                 cellphone='',
+                                 **self.user_data)
 
     def test_unique_fields(self):
         form = User(self.user_data)
