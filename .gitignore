@@ -90,3 +90,6 @@ ENV/
 
 .idea
 *.sqlite3
+
+# vim
+.*.sw?
