@@ -1,4 +1,4 @@
-from django.http.response import HttpResponseRedirect, HttpResponse
+from django.http.response import HttpResponseRedirect
 from django.shortcuts import render
 
 from webapp.forms import User as UserForm
