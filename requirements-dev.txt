@@ -1,0 +1,2 @@
+model-mommy==1.2.6
+-r requirements.txt
