@@ -1,1 +1,2 @@
 from .user_signup import UserSignup
+from .user_authentication import UserAuthenticationForm

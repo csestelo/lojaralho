@@ -4,7 +4,7 @@ from django.core.urlresolvers import reverse
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import render
 
-from webapp.forms import UserSignup as UserSignupForm
+from webapp.forms import UserSignup as UserSignupForm, UserAuthenticationForm
 
 
 def index(request):
@@ -13,7 +13,13 @@ def index(request):
 
 def login(request):
     if request.method == 'POST':
-        pass
+        form = UserAuthenticationForm(data=request.POST)
+        if form.is_valid():
+            log_user_in(request, form.get_user())
+            return HttpResponseRedirect(reverse('welcome'))
+    else:
+        form = UserAuthenticationForm
+    return render(request, 'login.html', {'form': form})
 
 
 def signup(request):
