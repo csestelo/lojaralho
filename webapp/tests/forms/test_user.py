@@ -1,7 +1,7 @@
 from django.contrib.auth.hashers import check_password
 from django.test import TestCase
 
-from webapp.forms import UserSignup
+from webapp.forms import UserSignupForm
 
 
 class TestUserForm(TestCase):
@@ -29,7 +29,7 @@ class TestUserForm(TestCase):
         self.assertEqual(user.cellphone, expected_fields['cellphone'])
 
     def test_all_fields(self):
-        form = UserSignup(self.user_data)
+        form = UserSignupForm(self.user_data)
         self.assertTrue(form.is_valid())
         user = form.save()
         self.assert_user_matches(user, **self.user_data)
@@ -38,7 +38,7 @@ class TestUserForm(TestCase):
         del self.user_data['address']
         del self.user_data['cellphone']
 
-        form = UserSignup(self.user_data)
+        form = UserSignupForm(self.user_data)
         self.assertTrue(form.is_valid())
 
         user = form.save()
@@ -48,14 +48,14 @@ class TestUserForm(TestCase):
                                  **self.user_data)
 
     def test_unique_fields(self):
-        form = UserSignup(self.user_data)
+        form = UserSignupForm(self.user_data)
         form.is_valid()
         form.save()
 
         # check *username* uniqueness
         user_data = self.user_data.copy()
         user_data['email'] = user_data['email_verify'] = 'sansa@stark.com'
-        form = UserSignup(user_data)
+        form = UserSignupForm(user_data)
         self.assertFalse(form.is_valid())
 
         # check *email* uniqueness
@@ -64,11 +64,11 @@ class TestUserForm(TestCase):
 
     def test_confirmation_fields(self):
         # check email confirmation
-        form = UserSignup(dict(self.user_data,
-                         email_verify='sansa@stark.com'))
+        form = UserSignupForm(dict(self.user_data,
+                                   email_verify='sansa@stark.com'))
         self.assertFalse(form.is_valid())
 
         # check password confirmation
-        form = UserSignup(dict(self.user_data,
-                         password2='321'))
+        form = UserSignupForm(dict(self.user_data,
+                                   password2='321'))
         self.assertFalse(form.is_valid())

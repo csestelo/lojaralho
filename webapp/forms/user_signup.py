@@ -5,7 +5,7 @@ from django.forms.fields import CharField
 from webapp.models import User as UserModel
 
 
-class UserSignup(UserCreationForm):
+class UserSignupForm(UserCreationForm):
     email_verify = CharField(required=True, max_length=254)
 
     def clean_email_verify(self):

@@ -4,7 +4,7 @@ from django.core.urlresolvers import reverse
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import render
 
-from webapp.forms import UserSignup as UserSignupForm, UserAuthenticationForm
+from webapp.forms import UserSignupForm, UserAuthenticationForm
 
 
 def index(request):
