@@ -9,7 +9,7 @@ class UserSignupForm(UserCreationForm):
     email_verify = CharField(required=True, max_length=254)
 
     def clean_email_verify(self):
-        email = self.cleaned_data['email']
+        email = self.cleaned_data.get('email')
         if email != self.cleaned_data['email_verify']:
             raise ValidationError('Email e confirmação não bateram.')
         return email

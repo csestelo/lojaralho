@@ -72,3 +72,13 @@ class TestUserForm(TestCase):
         form = UserSignupForm(dict(self.user_data,
                                    password2='321'))
         self.assertFalse(form.is_valid())
+
+    def test_clean_email_invalid_email(self):
+        email = 'elias.tandel'
+        data = dict(self.user_data,
+                    email=email,
+                    email_verify=email)
+        form = UserSignupForm(data=data)
+        self.assertFalse(form.is_valid())
+        self.assertIn('email', form.errors)
+
