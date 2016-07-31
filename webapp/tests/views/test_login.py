@@ -59,8 +59,25 @@ class TestLoginViewGET(LoginHelperMixin, TestCase):
         self.assertEqual(self.client.cookies['sessionid'], session_id)
         self.assertEqual(response['location'], reverse('welcome'))
 
+    def test_correct_view_is_called_and_correct_template_is_rendered(self):
+        response = self.client.get(reverse('login'))
+        template_names = [template.name for template in response.templates]
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.resolver_match.func, login)
+        self.assertEqual(template_names, ['login.html'])
+
 
 class TestLoginViewPOST(LoginHelperMixin, TestCase):
+    def test_post(self):
+        password = '11234'
+        user = self.create_user(password)
+        data = {'username': user.username, 'password': password}
+
+        response = self.client.post(reverse('login'), data=data)
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.resolver_match.func, login)
+        self.assertEqual(response['location'], reverse('welcome'))
+
     def test_redirect_to_welcome_if_user_is_authenticated(self):
         password = '12345'
 
