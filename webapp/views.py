@@ -12,6 +12,9 @@ def index(request):
 
 
 def login(request):
+    if request.user.is_authenticated():
+        return HttpResponseRedirect(reverse('welcome'))
+
     if request.method == 'POST':
         form = UserAuthenticationForm(data=request.POST)
         if form.is_valid():
