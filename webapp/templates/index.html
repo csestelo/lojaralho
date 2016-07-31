@@ -11,15 +11,16 @@
     </style>
 </head>
 <body>
-<header class="main-header">
-    <h1>Lojaralho</h1>
-</header>
-{% block user_message %}
-{% endblock user_message %}
-<div>
+    <header class="main-header">
+        <h1>Lojaralho</h1>
+    </header>
+    <h2>
+        Bem vindo, {{ user.first_name }}!
+    </h2>
+    <div>
 
-    <a href="{% url 'login' %}">Faça login</a>
-    <a href="{% url 'signup' %}">Cadastre-se</a>
-</div>
+        <a href="{% url 'login' %}">Faça login</a>
+        <a href="{% url 'signup' %}">Cadastre-se</a>
+    </div>
 </body>
 </html>

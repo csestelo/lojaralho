@@ -9,4 +9,4 @@ class TestIndex(TestCase):
         template_names = [template.name for template in response.templates]
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.resolver_match.func, welcome)
-        self.assertEqual(template_names, ['welcome.html', 'index.html'])
+        self.assertEqual(template_names, ['index.html'])

@@ -39,4 +39,4 @@ def signup(request):
 
 
 def welcome(request):
-    return render(request, 'welcome.html', {'user': request.user})
+    return render(request, 'index.html', {'user': request.user})
