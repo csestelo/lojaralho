@@ -1,5 +1,5 @@
 from django.conf import settings
-from django.contrib.auth import login as log_user_in
+from django.contrib.auth import login as log_user_in, logout as log_user_out
 from django.core.urlresolvers import reverse
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import render
@@ -40,3 +40,8 @@ def signup(request):
 
 def welcome(request):
     return render(request, 'index.html', {'user': request.user})
+
+
+def logout(request):
+    log_user_out(request)
+    return HttpResponseRedirect('/')

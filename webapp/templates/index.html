@@ -19,6 +19,7 @@
         <h2>
             Bem vindo, {{ user.first_name }}!
         </h2>
+        <a href="{% url 'logout' %}">Logout</a>
     {% else %}
         <div>
 
